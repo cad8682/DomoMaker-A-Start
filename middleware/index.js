@@ -1,0 +1,36 @@
+//Not commenting out even though it's DomoMakerC because as long as I don't actually connect it, it won't affect anything
+const requiresLogin = (req, res, next) => {
+    if(!req.session.account) {
+        return res.redirect('/');
+    }
+    return next();
+}
+
+const requiresLogout = (req, res, next) => {
+    if(req.session.account) {
+        return res.redirect('/maker');
+    }
+
+    return next();
+}
+
+const requiresSecure = (req, res, next) => {
+    if(req.headers['x-forwarded-proto'] !== 'https') {
+        return res.redirect(`https://${req.hostname}${req.url}`);
+    }
+    return next();
+}
+
+const bypassSecure = (req, res, next) => {
+    next();
+}
+
+module.exports.requiresLogin = requiresLogin;
+module.exports.requiresLogout = requiresLogout;
+
+if (process.env.NODE_ENV === 'production') {
+    modulke.exports.requiresSecure = requiresSecure;
+}
+else {
+    module.exports.requiresSecure = bypassSecure;
+}
