@@ -25,7 +25,7 @@ mongoose.connect(dbURI).catch((err) => {
 
 /*
 const redisClient = redis.createClient({
-    url: process.envREDISCLOUD_URL,
+    url: process.env.REDISCLOUD_URL,
 });
 redisClient.on('error', err => console.log('Redis Client Error', err));*/ //DomoMakerC
 

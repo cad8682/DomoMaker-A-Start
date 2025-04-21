@@ -1,18 +1,19 @@
 const controllers = require('./controllers');
+//const mid = require('./middleware'); //DomoMakerC
 
 const router = (app) => {
-    app.get('/login', controllers.Account.loginPage);
-    app.post('/login', controllers.Account.login);
+    app.get('/login',/* mid.requiresSecure, mid.requiresLogout, //DomoMakerC*/ controllers.Account.loginPage);
+    app.post('/login',/* mid.requiresSecure, mid.requiresLogout, //DomoMakerC*/ controllers.Account.login);
 
-    app.get('/signup', controllers.Account.signupPage);
-    app.post('/signup', controllers.Account.signup);
+    app.get('/signup',/* mid.requiresSecure, mid.requiresLogout, //DomoMakerC*/ controllers.Account.signupPage);
+    app.post('/signup',/* mid.requiresSecure, mid.requiresLogout, //DomoMakerC*/ controllers.Account.signup);
 
-    app.get('/logout', controllers.Account.logout);
+    app.get('/logout',/* mid.requiresLogin, //DomoMakerC*/ controllers.Account.logout);
 
-    app.get('/maker', controllers.Domo.makerPage);
-    //app.post('/maker', controllers.Domo.makeDomo); //DomoMakerB
+    app.get('/maker',/* mid.requiresLogin, //DomoMakerC*/ controllers.Domo.makerPage);
+    //app.post('/maker',/* mid.requiresLogin, //DomoMakerC*/ controllers.Domo.makeDomo); //DomoMakerB
 
-    app.get('/', controllers.Account.loginPage);
+    app.get('/',/* mid.requiresSecure, mid.requiresLogout, //DomoMakerC*/ controllers.Account.loginPage);
 };
 
 module.exports = router;
