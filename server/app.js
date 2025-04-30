@@ -1,4 +1,4 @@
-//require('dotenv').config(); //DomoMakerC
+require('dotenv').config(); //DomoMakerC
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -7,9 +7,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const helmet = require('helmet');
-//const session = require('express-session'); //DomoMakerB
-//const RedisStore = require('connect-redis').default; //DomoMakerC
-//const redis = require('redis'); //DomoMakerC
+const session = require('express-session');
+const RedisStore = require('connect-redis').default; //DomoMakerC
+const redis = require('redis'); //DomoMakerC
 
 const router = require('./router.js');
 
@@ -24,13 +24,12 @@ mongoose.connect(dbURI).catch((err) => {
     }
 });
 
-/*
 const redisClient = redis.createClient({
     url: process.env.REDISCLOUD_URL,
 });
-redisClient.on('error', err => console.log('Redis Client Error', err));*/ //DomoMakerC
+redisClient.on('error', err => console.log('Redis Client Error', err)); //DomoMakerC
 
-//redisClient.connect().then(() => {//DomoMakerC
+redisClient.connect().then(() => {//DomoMakerC
     const app = express();
 
     app.use(helmet());
@@ -40,16 +39,15 @@ redisClient.on('error', err => console.log('Redis Client Error', err));*/ //Domo
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    /* DomoMakerB
     app.use(session({
         key: 'sessionid',
-        //store: new Redistore({ //DomoMakerC
-            //client: redisClient, //DomoMakerC
-        //}), //DomoMakerC
+        store: new RedisStore({ //DomoMakerC
+            client: redisClient, //DomoMakerC
+        }), //DomoMakerC
         secret: 'Domo Arigato',
         resave: false,
         saveUninitialized: false,
-    }));*/
+    }));
 
     app.engine('handlebars', expressHandlebars.engine({ defaultLayout: ''}));
     app.set('view engine', 'handlebars');
@@ -61,4 +59,4 @@ redisClient.on('error', err => console.log('Redis Client Error', err));*/ //Domo
         if (err) { throw err; }
         console.log(`Listening on port ${port}`);
     });
-//}) //DomoMakerC
+}) //DomoMakerC

@@ -10,9 +10,8 @@ const signupPage = (req, res) => {
 };
 
 const logout = (req, res) => {
-    //req.session.destroy(); //DomoMakerB
-    //FOR DomoMakerB, REMOVE RETURN
-    return res.redirect('/');
+    req.session.destroy();
+    res.redirect('/');
 };
 
 const login = (req, res) => {
@@ -27,7 +26,7 @@ const login = (req, res) => {
         if (err || !account) {
             return res.status(401).json({ error: 'Wrong username or password! '});
         }
-        //req.session.account = Account.toAPI(account); //DomoMakerB
+        req.session.account = Account.toAPI(account);
 
         return res.json({ redirect: '/maker'});
     })
@@ -48,9 +47,8 @@ const signup = async (req, res) => {
     try {
         const hash = await Account.generateHash(pass);
         const newAccount = new Account({username, password: hash});
-        //Issue here
         await newAccount.save();
-        //req.session.account = Account.toAPI(newAccount); //DomoMakerB
+        req.session.account = Account.toAPI(newAccount);
         return res.json({ redirect: '/maker' });
     } catch (err) {
         console.log(err);

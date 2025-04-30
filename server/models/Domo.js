@@ -1,4 +1,3 @@
-/*
 const mongoose = require('mongoose');
 const _ = require('underscore');
 
@@ -33,4 +32,4 @@ DomoSchema.statics.toAPI = (doc) => ({
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);
-module.exports = DomoModel;*/ //DomoMakerB
+module.exports = DomoModel;
