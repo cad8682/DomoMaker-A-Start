@@ -35,6 +35,7 @@ redisClient.connect().then(() => {//DomoMakerC
     app.use(helmet());
     app.use('/assets', express.static(path.resolve(`${__dirname}/../hosted/`)));
     //app.use(favicon(`${__dirname}/../hosted/img/favicon.png`));
+    console.log("Resolved favicon path:", path.join(__dirname, '..', 'hosted', 'img', 'favicon.png'));
     app.use(favicon(path.join(__dirname, '..', 'hosted', 'img', 'favicon.png')));
     app.use(compression());
     app.use(bodyParser.urlencoded({ extended: true }));
