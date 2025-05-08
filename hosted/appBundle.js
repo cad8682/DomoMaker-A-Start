@@ -27344,6 +27344,26 @@ const DomoList = props => {
     };
     loadDomosFromServer();
   }, [props.reloadDomos]);
+
+  //From Project 2
+  const encostumeDomo = async id => {
+    try {
+      const response = await fetch(`/encostumeDomo/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        console.error('Failed to encostume your Domo');
+        return;
+      }
+      const updatedDomo = await response.json();
+      setDomos(prevDomos => prevDomos.map(domo => domo._id === updatedDomo._id ? updatedDomo : domo));
+    } catch (err) {
+      console.error('Error encostuming your Domo:', err);
+    }
+  };
   if (domos.length === 0) {
     return /*#__PURE__*/React.createElement("div", {
       className: "domoList"
@@ -27356,14 +27376,18 @@ const DomoList = props => {
       key: domo._id,
       className: "domo"
     }, /*#__PURE__*/React.createElement("img", {
-      src: "/assets/img/domoface.jpeg",
-      alt: "domo face",
+      src: `/assets/img/${domo.outfit}.jpg`,
+      alt: `${domo.outfit} face`,
       className: "domoFace"
     }), /*#__PURE__*/React.createElement("h3", {
       className: "domoName"
     }, "Name: ", domo.name), /*#__PURE__*/React.createElement("h3", {
       className: "domoAge"
-    }, "Age: ", domo.age));
+    }, "Age: ", domo.age), /*#__PURE__*/React.createElement("h3", {
+      className: "domoCostume"
+    }, "Costume Available: ", domo.availableCostume), domo.availableCostume && /*#__PURE__*/React.createElement("button", {
+      onClick: () => encostumeDomo(domo._id)
+    }, "Encostume Domo!"));
   });
   return /*#__PURE__*/React.createElement("div", {
     className: "domoList"

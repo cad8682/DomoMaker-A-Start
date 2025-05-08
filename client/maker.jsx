@@ -50,6 +50,33 @@ const DomoList = (props) => {
         loadDomosFromServer();
     }, [props.reloadDomos]);
 
+    //From Project 2
+    const encostumeDomo = async (id) => {
+        try {
+            const response = await fetch(`/encostumeDomo/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                console.error('Failed to encostume your Domo');
+                return;
+            }
+
+            const updatedDomo = await response.json();
+
+            setDomos((prevDomos) =>
+                prevDomos.map((domo) =>
+                    domo._id === updatedDomo._id ? updatedDomo : domo
+                )
+            );
+        } catch (err) {
+            console.error('Error encostuming your Domo:', err);
+        }
+    };
+
     if(domos.length === 0) {
         return (
             <div className="domoList">
@@ -61,9 +88,14 @@ const DomoList = (props) => {
     const domoNodes = domos.map(domo => {
         return (
             <div key={domo._id} className="domo">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
+                <img src={`/assets/img/${domo.outfit}.jpg`} alt={`${domo.outfit} face`} className='domoFace' />
                 <h3 className="domoName">Name: {domo.name}</h3>
                 <h3 className="domoAge">Age: {domo.age}</h3>
+                <h3 className="domoCostume">Costume Available: {domo.availableCostume}</h3>
+                {/*Project 2 helped with the button*/}
+                {domo.availableCostume && (
+                    <button onClick={() => encostumeDomo(domo._id)}>Encostume Domo!</button>
+                )}
             </div>
         );
     });
@@ -84,7 +116,7 @@ const App = () => {
                 <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
             </div>
             <div id="domos">
-                <DomoList domos={[]} reoadDomos={reloadDomos} />
+                <DomoList domos={[]} reloadDomos={reloadDomos} />
             </div>
         </div>
     );

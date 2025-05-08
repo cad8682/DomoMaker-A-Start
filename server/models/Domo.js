@@ -15,6 +15,13 @@ const DomoSchema = new mongoose.Schema({
         min: 0,
         required: true,
     },
+    outfit: {
+        type: String,
+        required: true,
+    },
+    availableCostume: {
+        type: String,
+    },
     owner: {
         type: mongoose.Schema.ObjectId,
         required: true,
@@ -29,6 +36,8 @@ const DomoSchema = new mongoose.Schema({
 DomoSchema.statics.toAPI = (doc) => ({
     name: doc.name,
     age: doc.age,
+    outfit: doc.outfit,
+    availableCostume: doc.availableCostume,
 });
 
 const DomoModel = mongoose.model('Domo', DomoSchema);
