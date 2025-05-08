@@ -27403,7 +27403,7 @@ const App = () => {
     id: "domos"
   }, /*#__PURE__*/React.createElement(DomoList, {
     domos: [],
-    reoadDomos: reloadDomos
+    reloadDomos: reloadDomos
   })));
 };
 const init = () => {

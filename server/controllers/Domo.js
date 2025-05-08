@@ -45,6 +45,7 @@ const getDomos = async (req, res) => {
 
 //From Project 2
 const encostumeDomo = async (req, res) => {
+    console.log("Encostume Domo Event Triggered");
     try {
         const domo = await Domo.findOne({
             _id: req.params.id,
