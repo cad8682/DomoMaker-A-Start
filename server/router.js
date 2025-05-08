@@ -15,6 +15,8 @@ const router = (app) => {
     app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
     app.post('/maker', mid.requiresLogin, controllers.Domo.makeDomo);
 
+    //Bug fixing said to put the /api/ here, I'm not sure if it's fully necessary because there were bigger problems,
+    //But I don't want to find out the hard way I really did need it, so it stays
     app.put('/api/encostumeDomo/:id', mid.requiresLogin, controllers.Domo.encostumeDomo);
 
     app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
