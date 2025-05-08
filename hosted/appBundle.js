@@ -27348,7 +27348,7 @@ const DomoList = props => {
   //From Project 2
   const encostumeDomo = async id => {
     try {
-      const response = await fetch(`/encostumeDomo/${id}`, {
+      const response = await fetch(`/api/encostumeDomo/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
